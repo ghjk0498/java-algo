@@ -1,4 +1,3 @@
-import implementation.Java1546;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,11 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+
+    private static final int number = 1546;
+    private static final boolean isDebug = true;
+
+    private static final String prefixClassName = "problem.java";
+    private static final String postfixClassName = ".Main";
+    private static final String url = "https://www.acmicpc.net/problem/";
+    private static final String userAgent = "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6";
+    private static final String referrer = "https://www.google.com";
+
     public static void main(String[] args) {
         try {
-            Document document = Jsoup.connect("https://www.acmicpc.net/problem/1546")
-                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                    .referrer("https://www.google.com")
+            Document document = Jsoup.connect(url + number)
+                    .userAgent(userAgent)
+                    .referrer(referrer)
                     .get();
 
             Elements elements = document.select(".sampledata");
@@ -43,11 +52,18 @@ public class App {
                 System.setIn(bais);
                 System.setOut(newOut);
 
-                Java1546.main(args);
+                Class.forName(prefixClassName + number + postfixClassName)
+                        .getDeclaredMethod("main", String[].class)
+                        .invoke(null, (Object) args);
                 String yHat = baos.toString().strip();
 
                 if (stringCheck(yHat, y) || errorCheck(yHat, y)) {
                     count += 1;
+                } else {
+                    if (isDebug) {
+                        originalOut.printf("제출: %s", yHat);
+                        originalOut.printf("정답: %s", y);
+                    }
                 }
 
                 bais.close();

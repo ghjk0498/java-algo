@@ -1,4 +1,4 @@
-package implementation;
+package problem.java1546;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Java1546 {
+public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,8 +19,8 @@ public class Java1546 {
 
         double max = Collections.max(list);
         double sum = list.stream()
-                .map(x -> x/max*100)
-                .reduce(1d, (result, x) -> result + x).doubleValue();
+                .map(x -> x / max * 100)
+                .reduce(1d, Double::sum);
         System.out.println(sum / n);
     }
 
